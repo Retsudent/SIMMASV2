@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * Script untuk membersihkan data yang sudah di-soft delete dari database
+ * Jalankan script ini untuk menghapus data yang sudah ditandai dengan deleted_at
+ */
+
+// Database configuration - sesuaikan dengan konfigurasi Anda
+$host = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'simmas';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$database;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage() . "\n");
+}
+
+echo "=== Cleanup Soft Deleted Data ===\n\n";
+
+// Check how many soft deleted records exist
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM magang WHERE deleted_at IS NOT NULL");
+$stmt->execute();
+$softDeletedCount = $stmt->fetchColumn();
+
+echo "Found {$softDeletedCount} soft deleted magang records.\n";
+
+if ($softDeletedCount === 0) {
+    echo "No soft deleted records found. Nothing to clean up.\n";
+    exit(0);
+}
+
+// Show details of soft deleted records
+echo "\nSoft deleted records:\n";
+$stmt = $pdo->prepare("SELECT id, siswa_id, dudi_id, guru_id, status, deleted_at FROM magang WHERE deleted_at IS NOT NULL");
+$stmt->execute();
+$softDeletedRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($softDeletedRecords as $record) {
+    echo "- ID: {$record['id']}, Siswa: {$record['siswa_id']}, DUDI: {$record['dudi_id']}, Guru: {$record['guru_id']}, Status: {$record['status']}, Deleted: {$record['deleted_at']}\n";
+}
+
+echo "\nDo you want to permanently delete these records? (y/N): ";
+$handle = fopen("php://stdin", "r");
+$line = fgets($handle);
+fclose($handle);
+
+if (trim(strtolower($line)) !== 'y') {
+    echo "Operation cancelled.\n";
+    exit(0);
+}
+
+// Permanently delete soft deleted records
+$stmt = $pdo->prepare("DELETE FROM magang WHERE deleted_at IS NOT NULL");
+$stmt->execute();
+$deletedCount = $stmt->rowCount();
+
+echo "\nPermanently deleted {$deletedCount} records from database.\n";
+echo "Cleanup completed successfully.\n";
