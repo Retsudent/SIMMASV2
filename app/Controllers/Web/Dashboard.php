@@ -26,9 +26,17 @@ class Dashboard extends BaseController
     
     public function siswa() 
     { 
+        // Pastikan hanya siswa yang dapat mengakses halaman ini
+        $userData = $this->getUserData();
+        
+        // Jika bukan siswa, redirect ke login
+        if ($userData['role'] !== 'siswa') {
+            return redirect()->to('/login');
+        }
+        
         // Pass user data to view
         $data = [
-            'user' => $this->getUserData()
+            'user' => $userData
         ];
         return view('dashboard/siswa', $data); 
     }

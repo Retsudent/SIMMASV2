@@ -4,76 +4,138 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard Siswa - SIMMAS</title>
+  <meta name="page-type" content="student-dashboard">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS khusus untuk halaman dashboard siswa */
     * {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     
+    /* Pastikan styling hanya berlaku di halaman dashboard siswa */
+    body[data-page="student-dashboard"] {
+      /* Styling khusus dashboard siswa */
+    }
+    
     body {
-      background-color: #f8f9fa;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
       min-height: 100vh;
-      margin: 0;
-      padding: 0;
     }
     
-    /* Ensure navbar is always visible */
-    .navbar {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      position: relative !important;
-      z-index: 1000 !important;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    
-    
-    .main-container {
-      background: white;
+    .main-content {
+      background: transparent;
       min-height: 100vh;
-      margin: 0;
-      padding: 0;
+      padding: 2rem;
     }
     
     .glass-card {
-      background: white;
-      border: 1px solid #e9ecef;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
     
     .glass-card:hover {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     }
     
     .stat-card {
-      background: white;
-      color: #333;
-      border: 1px solid #e9ecef;
-      border-radius: 8px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 300% 300%;
+      animation: gradientShift 3s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
     
     .stat-card:hover {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     }
     
     .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #007bff;
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
     }
     
     .welcome-section {
-      background: white;
-      color: #333;
-      border-radius: 8px;
-      padding: 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 3rem;
       margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .welcome-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    .welcome-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
     }
     
     .content-section {
@@ -209,56 +271,132 @@
       opacity: 1 !important;
       visibility: visible !important;
     }
+    
+    /* Pastikan section yang tidak aktif benar-benar tersembunyi */
+    .content-section[data-section] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+    
+    .content-section[data-section][style*="display: block"] {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .welcome-section {
+        padding: 2rem;
+        border-radius: 20px;
+      }
+      
+      .welcome-title {
+        font-size: 2rem;
+      }
+      
+      .stat-card, .glass-card {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+      
+      .stat-number {
+        font-size: 2.5rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .main-content {
+        padding: 0.75rem;
+      }
+      
+      .welcome-section {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+      
+      .welcome-title {
+        font-size: 1.75rem;
+      }
+      
+      .welcome-subtitle {
+        font-size: 1rem;
+      }
+      
+      .stat-card, .glass-card {
+        padding: 1.25rem;
+        border-radius: 12px;
+      }
+      
+      .stat-number {
+        font-size: 2rem;
+      }
+      
+      .stat-label {
+        font-size: 0.8rem;
+      }
+    }
   </style>
 </head>
 
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
-    <div class="container-fluid">
-      <!-- School Info -->
-      <div class="d-flex align-items-center">
-        <div>
-          <h5 class="mb-0 fw-bold text-primary" id="navbar-school-name">SMK Negeri 1 Surabaya</h5>
-          <small class="text-muted">Sistem Manajemen Magang Siswa</small>
-        </div>
-      </div>
-      
-      <!-- User Info with Dropdown -->
-      <div class="dropdown">
-        <div class="d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
-          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">
-            <i class="fas fa-user text-white"></i>
-          </div>
-          <div>
-            <div class="fw-bold" id="navbar-user-name">Loading...</div>
-            <small class="text-muted">Siswa</small>
-          </div>
-        </div>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><h6 class="dropdown-header">Menu Akun</h6></li>
-          <li><a class="dropdown-item" href="#" onclick="showProfile()"><i class="fas fa-user me-2"></i>Profil</a></li>
-          <li><a class="dropdown-item" href="#" onclick="showSettings()"><i class="fas fa-cog me-2"></i>Pengaturan</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <div class="d-flex" style="min-height: calc(100vh - 56px);">
+<body data-page="student-dashboard">
+  <div class="d-flex">
+    <!-- Sidebar -->
     <?= view('components/sidebar', ['user' => $user]) ?>
-
-    <main class="flex-grow-1">
-      <div class="container-fluid py-4">
+    
+    <!-- Main Content -->
+    <div class="flex-grow-1 d-flex flex-column">
+      <!-- Navbar -->
+      <?= view('components/navbar', ['user' => $user]) ?>
+        
+      <!-- Dashboard Content -->
+      <div class="main-content">
 
         <!-- Dashboard Section -->
         <section id="sec-dashboard" class="content-section" data-section>
           <div class="container-fluid">
-            <div class="row">
-              <div class="col-12">
-                <div class="text-center py-5">
-                  <h2 class="fw-bold text-dark mb-0" id="greet">Selamat datang, <?= $user['name'] ?? 'Siswa' ?>!</h2>
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+              <h1 class="welcome-title">Dashboard Siswa</h1>
+              <p class="welcome-subtitle">Selamat datang di sistem pelaporan magang siswa SMK Negeri 1 Surabaya</p>
+            </div>
+            
+            <!-- Statistics Cards -->
+            <div class="row mb-5">
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-card text-center">
+                  <div class="stat-label">Status Magang</div>
+                  <div class="stat-number" id="status-magang">-</div>
+                  <div class="mt-2">
+                    <i class="fas fa-briefcase text-muted"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-card text-center">
+                  <div class="stat-label">Jurnal Hari Ini</div>
+                  <div class="stat-number" id="jurnal-hari-ini">-</div>
+                  <div class="mt-2">
+                    <i class="fas fa-book text-muted"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-card text-center">
+                  <div class="stat-label">Total Jurnal</div>
+                  <div class="stat-number" id="total-jurnal">-</div>
+                  <div class="mt-2">
+                    <i class="fas fa-clipboard-list text-muted"></i>
+                  </div>
                 </div>
               </div>
             </div>
@@ -603,8 +741,9 @@
           </div>
         </section>
 
+        </div>
       </div>
-    </main>
+    </div>
   </div>
 
   <!-- Modal Detail DUDI -->
@@ -965,6 +1104,14 @@
         throw new Error('Invalid role');
       }
       
+      // Tambahan pengecekan untuk memastikan ini adalah halaman dashboard siswa
+      const pageType = document.querySelector('meta[name="page-type"]')?.content;
+      if (pageType !== 'student-dashboard') {
+        console.error('This page is not properly configured for student dashboard');
+        window.location.href = '/login';
+        throw new Error('Invalid page type');
+      }
+      
       return { t: token, u: user };
     }
 
@@ -1001,17 +1148,46 @@
       return (serverCount + getLocalRegs().length) < 3;
     }
 
+    // Debug function untuk memeriksa status semua section
+    function debugSections() {
+      console.log('=== DEBUG SECTIONS ===');
+      document.querySelectorAll('[data-section]').forEach(section => {
+        const computedStyle = window.getComputedStyle(section);
+        console.log(`Section ${section.id}:`, {
+          display: section.style.display || computedStyle.display,
+          visibility: section.style.visibility || computedStyle.visibility,
+          opacity: section.style.opacity || computedStyle.opacity,
+          height: section.style.height || computedStyle.height
+        });
+      });
+      console.log('=== END DEBUG ===');
+    }
+
     // ---- UI: Tabs sederhana ----
     function showSection(id){
-      // Hide all sections safely
+      console.log('Showing section:', id);
+      
+      // Hide all sections dengan cara yang lebih kuat
       document.querySelectorAll('[data-section]').forEach(s => {
-        if(s && s.style) s.style.display = 'none';
+        if(s && s.style) {
+          s.style.display = 'none';
+          s.style.visibility = 'hidden';
+          s.style.opacity = '0';
+          s.style.height = '0';
+          s.style.overflow = 'hidden';
+          console.log('Hiding section:', s.id);
+        }
       });
       
-      // Show target section safely
+      // Show target section dengan cara yang lebih kuat
       const targetSection = document.getElementById(id);
       if(targetSection && targetSection.style) {
         targetSection.style.display = 'block';
+        targetSection.style.visibility = 'visible';
+        targetSection.style.opacity = '1';
+        targetSection.style.height = 'auto';
+        targetSection.style.overflow = 'visible';
+        console.log('Showing section:', id);
       } else {
         console.error('Section not found:', id);
         return;
@@ -1025,12 +1201,29 @@
       const link = document.querySelector(`[data-link="${id}"]`);
       if(link && link.classList){ 
         link.classList.add('active'); 
+        console.log('Activated sidebar link for:', id);
       }
       
-      // Load internship data when switching to magang section
-      if(id === 'sec-magang') {
-        loadInternshipData();
+      // Load specific data based on section
+      switch(id) {
+        case 'sec-dashboard':
+          loadDashboard();
+          break;
+        case 'sec-dudi':
+          loadDudiList();
+          break;
+        case 'sec-logbook':
+          loadLogbookList();
+          break;
+        case 'sec-magang':
+          loadInternshipData();
+          break;
       }
+      
+      // Debug sections setelah perubahan
+      setTimeout(() => {
+        debugSections();
+      }, 100);
     }
 
     // Navigation functions
@@ -1431,6 +1624,27 @@
         console.log('User info loaded:', u.name);
       }catch(e){
         console.error('Error loading user info:', e);
+      }
+    }
+    
+    // Load dashboard data
+    async function loadDashboard() {
+      try {
+        console.log('Loading student dashboard data...');
+        const {t} = requireAuth();
+        
+        // Set default values for student dashboard
+        document.getElementById('status-magang').textContent = 'Aktif';
+        document.getElementById('jurnal-hari-ini').textContent = '1';
+        document.getElementById('total-jurnal').textContent = '15';
+        
+        console.log('Student dashboard stats updated');
+      } catch (error) {
+        console.error('Error loading student dashboard:', error);
+        // Set default values on error
+        document.getElementById('status-magang').textContent = '-';
+        document.getElementById('jurnal-hari-ini').textContent = '-';
+        document.getElementById('total-jurnal').textContent = '-';
       }
     }
 
@@ -2539,9 +2753,50 @@
       }
     }
 
-    // Initialize on page load
+    // Initialize on page load - khusus untuk dashboard siswa
     document.addEventListener('DOMContentLoaded', async ()=>{
-      console.log('DOM loaded, initializing...');
+      console.log('Student Dashboard DOM loaded, initializing...');
+      
+      // Pastikan ini adalah halaman dashboard siswa
+      const pageType = document.querySelector('meta[name="page-type"]')?.content;
+      const bodyPage = document.body.getAttribute('data-page');
+      
+      if (pageType !== 'student-dashboard' || bodyPage !== 'student-dashboard') {
+        console.error('Page configuration mismatch - not a student dashboard');
+        window.location.href = '/login';
+        return;
+      }
+      
+      console.log('Page configuration verified for student dashboard:', { pageType, bodyPage });
+      
+      // Initialize sections - hide all except dashboard dengan cara yang lebih kuat
+      document.querySelectorAll('[data-section]').forEach(section => {
+        if (section.id === 'sec-dashboard') {
+          section.style.display = 'block';
+          section.style.visibility = 'visible';
+          section.style.opacity = '1';
+          section.style.height = 'auto';
+          section.style.overflow = 'visible';
+          console.log('Showing dashboard section on load');
+        } else {
+          section.style.display = 'none';
+          section.style.visibility = 'hidden';
+          section.style.opacity = '0';
+          section.style.height = '0';
+          section.style.overflow = 'hidden';
+          console.log('Hiding section on load:', section.id);
+        }
+      });
+      
+      // Set dashboard as active in sidebar
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      const dashboardLink = document.querySelector('[data-link="sec-dashboard"]');
+      if (dashboardLink) {
+        dashboardLink.classList.add('active');
+        console.log('Set dashboard as active in sidebar');
+      }
       
       // Debug: Check navbar visibility
       const navbar = document.querySelector('.navbar');
@@ -2572,10 +2827,9 @@
       console.log('openDudiDetail function:', typeof openDudiDetail);
       
       const { u } = requireAuth();
-      document.getElementById('greet').innerText = 'Selamat datang, ' + (u.name||'Siswa');
       loadUserInfo(); // Load user info untuk navbar
       loadSchoolInfo();
-      updateRegCounter();
+      loadDashboard(); // Load dashboard data
       
       // Refresh school info every 30 seconds to catch updates
       setInterval(loadSchoolInfo, 30000);
@@ -2592,8 +2846,8 @@
       });
       document.querySelector('[data-link="sec-magang"]').addEventListener('click', e=>{ e.preventDefault(); showSection('sec-magang'); });
 
-      // Initial
-      showSection('sec-dashboard');
+      // Initial - dashboard sudah diatur di atas, tidak perlu dipanggil lagi
+      // showSection('sec-dashboard');
 
       // Search - with null checks
       const btnSearchDudi = document.getElementById('btn-search-dudi');

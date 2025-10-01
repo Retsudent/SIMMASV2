@@ -37,21 +37,23 @@ $menuItems = match($userRole) {
 ?>
 
 <!-- Sidebar Component -->
-<aside id="sidebar" class="sidebar bg-light border-end d-flex flex-column" style="min-height: 100vh; width: 280px; transition: transform 0.3s ease;">
+<aside id="sidebar" class="sidebar d-flex flex-column" style="min-height: 100vh; width: 300px; transition: transform 0.3s ease;">
   <!-- Sidebar Header -->
-  <div class="border-bottom sidebar-header">
-    <div class="d-flex align-items-center justify-content-between w-100" style="margin-bottom: 0;">
+  <div class="sidebar-header">
+    <div class="d-flex align-items-center justify-content-between w-100">
       <div class="d-flex align-items-center flex-grow-1">
-        <div class="bg-primary rounded-2 d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-          <i class="fas fa-graduation-cap text-white fs-5"></i>
+        <div class="sidebar-logo me-3">
+          <div class="logo-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
         </div>
         <div>
-          <h5 class="mb-0 fw-bold text-dark">SIMMAS</h5>
-          <small class="text-muted"><?= ucfirst($userRole) ?> Panel</small>
+          <h5 class="mb-0 fw-bold text-dark sidebar-title">SIMMAS</h5>
+          <small class="text-muted sidebar-subtitle"><?= ucfirst($userRole) ?> Panel</small>
         </div>
       </div>
       <!-- Close Button -->
-      <button class="btn btn-link text-muted p-1 d-lg-none ms-auto" type="button" onclick="closeSidebar()" aria-label="Close sidebar">
+      <button class="btn btn-link text-muted p-1 d-lg-none ms-auto sidebar-close" type="button" onclick="closeSidebar()" aria-label="Close sidebar">
         <i class="fas fa-times fs-5"></i>
       </button>
     </div>
@@ -60,17 +62,17 @@ $menuItems = match($userRole) {
   <!-- Navigation Menu -->
   <nav class="p-3 flex-grow-1">
     <h6 class="text-muted mb-3 fw-semibold" id="sidebar-menu-label">Menu</h6>
-    <ul class="nav nav-pills flex-column gap-2">
+    <ul class="nav nav-pills flex-column gap-3">
       <?php foreach ($menuItems as $item): ?>
       <li class="nav-item">
-        <a class="nav-link sidebar-link d-flex align-items-center py-3 px-3 rounded-3 text-decoration-none <?= $item['active'] ? 'active' : '' ?>" 
+        <a class="nav-link sidebar-link d-flex align-items-center py-3 px-4 rounded-3 text-decoration-none <?= $item['active'] ? 'active' : '' ?>" 
            href="<?= $item['link'] ?>" 
            data-link="<?= $item['text'] === 'Dashboard' ? 'sec-dashboard' : ($item['text'] === 'DUDI' ? 'sec-dudi' : ($item['text'] === 'Jurnal Harian' ? 'sec-logbook' : ($item['text'] === 'Magang' ? 'sec-magang' : ($item['text'] === 'Pengguna' ? 'sec-users' : ($item['text'] === 'Pengaturan' ? 'sec-settings' : 'sec-dashboard'))))) ?>"
            onclick="console.log('Menu clicked:', '<?= $item['text'] ?>'); if(typeof handleMenuClick === 'function') { handleMenuClick('<?= $item['text'] === 'Dashboard' ? 'sec-dashboard' : ($item['text'] === 'DUDI' ? 'sec-dudi' : ($item['text'] === 'Jurnal Harian' ? 'sec-logbook' : ($item['text'] === 'Magang' ? 'sec-magang' : ($item['text'] === 'Pengguna' ? 'sec-users' : ($item['text'] === 'Pengaturan' ? 'sec-settings' : 'sec-dashboard'))))) ?>'); } else { console.error('handleMenuClick function not found'); }">
           <div class="d-flex align-items-center w-100">
-            <i class="<?= $item['icon'] ?> me-3 fs-5"></i>
+            <i class="<?= $item['icon'] ?> me-3 fs-4"></i>
             <div class="flex-grow-1">
-              <div class="fw-semibold"><?= $item['text'] ?></div>
+              <div class="fw-semibold mb-0"><?= $item['text'] ?></div>
               <small class="opacity-75"><?= $item['desc'] ?></small>
             </div>
           </div>
@@ -81,10 +83,10 @@ $menuItems = match($userRole) {
   </nav>
 
   <!-- Sidebar Footer -->
-  <div class="p-3 border-top bg-light">
-    <div class="d-flex align-items-center mb-2">
-      <div class="bg-success rounded-circle me-2" style="width: 8px; height: 8px;"></div>
-      <small class="text-muted fw-semibold"><?= $schoolName ?></small>
+  <div class="sidebar-footer">
+    <div class="d-flex align-items-center mb-1">
+      <div class="status-indicator me-2"></div>
+      <small class="text-muted fw-semibold mb-0"><?= $schoolName ?></small>
     </div>
     <div class="small text-muted">
       Sistem Pelaporan <?= $appVersion ?>
@@ -95,17 +97,122 @@ $menuItems = match($userRole) {
 <style>
 /* Sidebar header styling to match navbar height */
 .sidebar-header {
-  padding: 0.5rem 1.5rem;
-  height: 85px;
+  padding: 0.75rem 1.5rem;
+  height: 80px;
   display: flex;
   align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-logo .logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.sidebar-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a202c;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.1rem;
+}
+
+.sidebar-subtitle {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #718096;
+}
+
+.sidebar-close {
+  border-radius: 8px;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  background: rgba(248, 250, 252, 0.8);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 /* Responsive adjustments for sidebar */
 @media (max-width: 768px) {
   .sidebar-header {
-    padding: 0.4rem 1rem;
-    height: 85px;
+    padding: 0.75rem 1rem;
+    height: 80px;
+  }
+  
+  .sidebar-footer {
+    padding: 1rem;
+  }
+  
+  .sidebar-title {
+    font-size: 1rem;
+  }
+  
+  .sidebar-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .sidebar-logo .logo-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 260px;
+  }
+  
+  .sidebar-header {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .sidebar-footer {
+    padding: 0.75rem;
+  }
+  
+  .sidebar .nav-link {
+    padding: 1rem 1.25rem;
+    min-height: 3.5rem;
+  }
+  
+  .sidebar .nav-link .flex-grow-1 small {
+    display: none;
   }
 }
 </style>
@@ -113,40 +220,87 @@ $menuItems = match($userRole) {
 <style>
 /* Sidebar styles */
 .sidebar {
-  background-color: #f8f9fa;
-  border-right: 1px solid #dee2e6;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(20px);
 }
 
 .sidebar .nav-link {
-  color: #6c757d;
-  transition: all 0.2s ease;
+  color: #64748b;
+  transition: all 0.3s ease;
   border: none;
   background: none;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 1.25rem;
+  min-height: 4rem;
+  display: flex;
+  align-items: center;
 }
 
 .sidebar .nav-link:hover {
-  background-color: #e9ecef;
-  color: #495057;
+  background: rgba(102, 126, 234, 0.1);
+  color: #475569;
+  transform: translateX(4px);
 }
 
 .sidebar .nav-link.active {
-  background-color: #0d6efd;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  box-shadow: 0 2px 4px rgba(13, 110, 253, 0.2);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transform: translateX(4px);
 }
 
 .sidebar .nav-link.active:hover {
-  background-color: #0b5ed7;
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
   color: white;
+  transform: translateX(4px);
 }
 
 .sidebar .nav-link.active i {
   color: white;
 }
 
+.sidebar .nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.sidebar .nav-link:hover::before {
+  left: 100%;
+}
+
 .sidebar .nav-link i {
-  width: 20px;
+  width: 24px;
   text-align: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.sidebar .nav-link .flex-grow-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.sidebar .nav-link .fw-semibold {
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.sidebar .nav-link small {
+  font-size: 0.9rem;
+  line-height: 1.3;
+  margin-top: 0.3rem;
 }
 
 /* Sidebar toggle styles */
@@ -208,7 +362,8 @@ $menuItems = match($userRole) {
   }
   
   .sidebar .nav-link {
-    padding: 0.75rem 1rem;
+    padding: 1rem 1.25rem;
+    min-height: 3.5rem;
   }
   
   .sidebar .nav-link .flex-grow-1 small {

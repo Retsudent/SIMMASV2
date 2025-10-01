@@ -6,50 +6,348 @@
   <title>Dashboard Guru - SIMMAS</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #f8f9fa;
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     
-    .main-content {
-      background-color: #ffffff;
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
       min-height: 100vh;
     }
     
+    .main-content {
+      background: transparent;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    
     .stat-card {
-      background: white;
-      border: 1px solid #dee2e6;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 300% 300%;
+      animation: gradientShift 3s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
     
     .stat-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     }
     
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #198754;
+    .stat-card .value {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    
+    .stat-card .label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
     
     .info-panel {
-      background: white;
-      border: 1px solid #dee2e6;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .info-panel:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     }
     
     .welcome-section {
-      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      border-radius: 0.75rem;
-      padding: 2rem;
+      border-radius: 24px;
+      padding: 3rem;
       margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .welcome-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    .welcome-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .fw-semibold {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .fw-semibold i {
+      margin-right: 0.75rem;
+      color: #667eea;
+    }
+    
+    .panel-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .panel-title i {
+      margin-right: 0.75rem;
+      color: #667eea;
+    }
+    
+    .info-panel .panel-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .info-panel .panel-title i {
+      margin-right: 0.5rem;
+      color: #667eea;
+      font-size: 1rem;
+    }
+    
+    /* Compact spacing for card content */
+    .card .vstack {
+      gap: 0.1rem !important;
+    }
+    
+    .card .vstack > * {
+      margin-bottom: 0.05rem !important;
+    }
+    
+    .card .vstack > *:last-child {
+      margin-bottom: 0 !important;
+    }
+    
+    /* Reduce padding in card content */
+    .card p {
+      margin-bottom: 0.1rem;
+    }
+    
+    .card .mb-2 {
+      margin-bottom: 0.1rem !important;
+    }
+    
+    .card .mb-3 {
+      margin-bottom: 0.2rem !important;
+    }
+    
+    /* Compact list items */
+    .card .list-group-item {
+      padding: 0.3rem 0.5rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .card .list-group-item:last-child {
+      border-bottom: none;
+    }
+    
+    /* Reduce spacing in badge areas */
+    .badge {
+      font-size: 0.6rem;
+      padding: 0.15rem 0.3rem;
+    }
+    
+    /* Compact text spacing */
+    .card small {
+      font-size: 0.65rem;
+      line-height: 1.1;
+    }
+    
+    .card .text-muted {
+      font-size: 0.7rem;
+    }
+    
+    /* Compact card titles */
+    .card .fw-semibold {
+      margin-bottom: 0.1rem !important;
+    }
+    
+    /* Compact spacing for dynamic content */
+    .list-item {
+      padding: 0.2rem 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .list-item:last-child {
+      border-bottom: none;
+    }
+    
+    .list-item .fw-bold {
+      margin-bottom: 0.02rem;
+    }
+    
+    .list-item .text-muted {
+      margin-bottom: 0.02rem;
+    }
+    
+    .list-item .badge {
+      margin-top: 0.05rem;
+    }
+    
+    /* Compact spacing for info-panel content */
+    .info-panel .border-bottom {
+      padding: 0.5rem 0;
+    }
+    
+    .info-panel .fw-semibold {
+      margin-bottom: 0.1rem;
+    }
+    
+    .info-panel .small {
+      margin-bottom: 0.1rem;
+    }
+    
+    .info-panel .text-muted {
+      margin-bottom: 0.1rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .welcome-section {
+        padding: 2rem;
+        border-radius: 20px;
+      }
+      
+      .welcome-title {
+        font-size: 2rem;
+      }
+      
+      .stat-card, .card {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+      
+      .stat-card .value {
+        font-size: 2.5rem;
+      }
+      
+      .panel-title {
+        font-size: 1.1rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .main-content {
+        padding: 0.75rem;
+      }
+      
+      .welcome-section {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+      
+      .welcome-title {
+        font-size: 1.75rem;
+      }
+      
+      .welcome-subtitle {
+        font-size: 1rem;
+      }
+      
+      .stat-card, .card {
+        padding: 1.25rem;
+        border-radius: 12px;
+      }
+      
+      .stat-card .value {
+        font-size: 2rem;
+      }
+      
+      .stat-card .label {
+        font-size: 0.8rem;
+      }
+      
+      .panel-title {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -64,36 +362,97 @@
       <?= view('components/navbar', ['user' => $user]) ?>
       
       <!-- Dashboard Content -->
-      <div class="main-content p-4">
+      <div class="main-content">
         <!-- Welcome Section -->
         <div class="welcome-section">
-          <h2>Dashboard Guru</h2>
-          <p>Selamat datang di panel guru pembimbing magang siswa.</p>
+          <h1 class="welcome-title">Dashboard Guru</h1>
+          <p class="welcome-subtitle">Selamat datang di panel guru pembimbing magang siswa</p>
         </div>
-        <div class="container py-4">
-  <div class="tab-content">
-    <div class="tab-pane fade show active" id="tab-dashboard">
-      <div class="row g-3 mb-3">
-        <div class="col-md-3"><div class="card p-3 stat-card"><div class="label">Total Siswa</div><div class="value" id="stat-total">-</div></div></div>
-        <div class="col-md-3"><div class="card p-3 stat-card"><div class="label">DUDI Partner</div><div class="value" id="stat-dudi">-</div></div></div>
-        <div class="col-md-3"><div class="card p-3 stat-card"><div class="label">Siswa Magang</div><div class="value" id="stat-aktif">-</div></div></div>
-        <div class="col-md-3"><div class="card p-3 stat-card"><div class="label">Logbook Hari Ini</div><div class="value" id="stat-logbook">-</div></div></div>
+        <div class="container-fluid">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-dashboard">
+              <div class="row g-4 mb-5">
+                <div class="col-lg-3 col-md-6">
+                  <div class="stat-card text-center">
+                    <div class="label">Total Siswa</div>
+                    <div class="value" id="stat-total">-</div>
+                    <div class="mt-2">
+                      <i class="fas fa-users text-muted"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="stat-card text-center">
+                    <div class="label">DUDI Partner</div>
+                    <div class="value" id="stat-dudi">-</div>
+                    <div class="mt-2">
+                      <i class="fas fa-industry text-muted"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="stat-card text-center">
+                    <div class="label">Siswa Magang</div>
+                    <div class="value" id="stat-aktif">-</div>
+                    <div class="mt-2">
+                      <i class="fas fa-briefcase text-muted"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="stat-card text-center">
+                    <div class="label">Logbook Hari Ini</div>
+                    <div class="value" id="stat-logbook">-</div>
+                    <div class="mt-2">
+                      <i class="fas fa-book text-muted"></i>
+                    </div>
+                  </div>
+                </div>
       </div>
-      <div class="row g-3">
-        <div class="col-lg-7">
-          <div class="card p-3">
-            <div class="fw-semibold mb-2">Magang Terbaru</div>
-            <div id="list-magang" class="vstack gap-2"></div>
-          </div>
-          <div class="card p-3 mt-3">
-            <div class="fw-semibold mb-2">Logbook Terbaru</div>
-            <div id="list-logbook" class="vstack gap-2"></div>
+      <div class="row">
+        <div class="col-lg-9 mb-4">
+          <div class="info-panel">
+            <h6 class="panel-title">
+              <i class="fas fa-briefcase"></i>
+              Magang Terbaru
+            </h6>
+            <div id="list-magang">
+              <div class="text-muted text-center py-4">
+                <i class="fas fa-inbox fa-2x mb-3 opacity-50"></i>
+                <p class="mb-0">Tidak ada data magang</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-lg-5">
-          <div class="card p-3">
-            <div class="fw-semibold mb-2">DUDI Aktif</div>
-            <div id="list-dudi" class="vstack gap-2"></div>
+        <div class="col-lg-3 mb-4">
+          <div class="info-panel">
+            <h6 class="panel-title">
+              <i class="fas fa-industry"></i>
+              DUDI Aktif
+            </h6>
+            <div id="list-dudi">
+              <div class="text-muted text-center py-4">
+                <i class="fas fa-building fa-2x mb-3 opacity-50"></i>
+                <p class="mb-0">Tidak ada data DUDI</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-9 mb-4">
+          <div class="info-panel">
+            <h6 class="panel-title">
+              <i class="fas fa-book"></i>
+              Logbook Terbaru
+            </h6>
+            <div id="list-logbook">
+              <div class="text-muted text-center py-4">
+                <i class="fas fa-clipboard-list fa-2x mb-3 opacity-50"></i>
+                <p class="mb-0">Tidak ada data logbook</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -887,47 +1246,59 @@ async function loadGuruStats(){
       s = await rs.json();
     }
         const lm=document.getElementById('list-magang'); 
-        lm.innerHTML='';
-        (s.magang_terbaru||[]).forEach(m=>{ 
-          const periode = (m.tanggal_mulai?m.tanggal_mulai:'?') + ' / ' + (m.tanggal_selesai?m.tanggal_selesai:'?');
-          const status = m.status||'';
-          const div=document.createElement('div'); 
-          div.className='list-item'; 
-          div.innerHTML=`<div class="d-flex justify-content-between">
-            <div>
-              <div class="fw-semibold">${m.siswa_nama||'-'}</div>
-              <div class="small text-muted">${m.dudi_nama||'-'} • ${periode}</div>
-            </div>
-            <span class="badge ${status==='aktif'?'bg-success':(status==='selesai'?'bg-secondary':'bg-warning text-dark')} align-self-start">${status}</span>
-          </div>`; 
-          lm.appendChild(div); 
-        });
+        if((s.magang_terbaru||[]).length === 0) {
+          lm.innerHTML='<div class="text-muted text-center py-4"><i class="fas fa-inbox fa-2x mb-3 opacity-50"></i><p class="mb-0">Tidak ada data magang</p></div>';
+        } else {
+          lm.innerHTML='';
+          (s.magang_terbaru||[]).forEach(m=>{ 
+            const periode = (m.tanggal_mulai?m.tanggal_mulai:'?') + ' / ' + (m.tanggal_selesai?m.tanggal_selesai:'?');
+            const status = m.status||'';
+            const div=document.createElement('div'); 
+            div.className='border-bottom py-2'; 
+            div.innerHTML=`<div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold mb-1">${m.siswa_nama||'-'}</div>
+                <div class="small text-muted">${m.dudi_nama||'-'} • ${periode}</div>
+              </div>
+              <span class="badge ${status==='aktif'?'bg-success':(status==='selesai'?'bg-secondary':'bg-warning text-dark')}">${status}</span>
+            </div>`; 
+            lm.appendChild(div); 
+          });
+        }
         
         const ld=document.getElementById('list-dudi'); 
-        ld.innerHTML='';
-        (g.dudi_aktif_list||[]).forEach(d=>{ 
-          const div=document.createElement('div'); 
-          div.className='list-item d-flex justify-content-between'; 
-          div.innerHTML=`<div><div class="fw-semibold">${d.nama_perusahaan}</div><div class="small text-muted">${d.alamat||''} ${d.telepon?(' • '+d.telepon):''}</div></div><span class="badge bg-primary align-self-center">${d.jumlah_siswa||0} siswa</span>`; 
-          ld.appendChild(div); 
-        });
+        if((g.dudi_aktif_list||[]).length === 0) {
+          ld.innerHTML='<div class="text-muted text-center py-4"><i class="fas fa-building fa-2x mb-3 opacity-50"></i><p class="mb-0">Tidak ada data DUDI</p></div>';
+        } else {
+          ld.innerHTML='';
+          (g.dudi_aktif_list||[]).forEach(d=>{ 
+            const div=document.createElement('div'); 
+            div.className='border-bottom py-2 d-flex justify-content-between align-items-center'; 
+            div.innerHTML=`<div><div class="fw-semibold mb-1">${d.nama_perusahaan}</div><div class="small text-muted">${d.alamat||''} ${d.telepon?(' • '+d.telepon):''}</div></div><span class="badge bg-primary">${d.jumlah_siswa||0} siswa</span>`; 
+            ld.appendChild(div); 
+          });
+        }
         
         const ll=document.getElementById('list-logbook'); 
         if(ll){ 
-          ll.innerHTML=''; 
-          (s.logbook_terbaru||[]).forEach(l=>{ 
-            const div=document.createElement('div'); 
-            div.className='list-item'; 
-            div.innerHTML=`<div class="d-flex justify-content-between">
-              <div>
-                <div class="fw-semibold">${l.siswa_nama||'-'}</div>
-                <div class="small text-muted">${l.tanggal||''} • ${l.dudi_nama||'-'}</div>
-                <div class="small">${l.kegiatan||''}</div>
-              </div>
-              <span class="badge ${l.status_verifikasi==='disetujui'?'bg-success':(l.status_verifikasi==='ditolak'?'bg-danger':'bg-warning text-dark')}">${l.status_verifikasi||'pending'}</span>
-            </div>`; 
-            ll.appendChild(div); 
-          }); 
+          if((s.logbook_terbaru||[]).length === 0) {
+            ll.innerHTML='<div class="text-muted text-center py-4"><i class="fas fa-clipboard-list fa-2x mb-3 opacity-50"></i><p class="mb-0">Tidak ada data logbook</p></div>';
+          } else {
+            ll.innerHTML=''; 
+            (s.logbook_terbaru||[]).forEach(l=>{ 
+              const div=document.createElement('div'); 
+              div.className='border-bottom py-2'; 
+              div.innerHTML=`<div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="fw-semibold mb-1">${l.siswa_nama||'-'}</div>
+                  <div class="small text-muted mb-1">${l.tanggal||''} • ${l.dudi_nama||'-'}</div>
+                  <div class="small">${l.kegiatan||''}</div>
+                </div>
+                <span class="badge ${l.status_verifikasi==='disetujui'?'bg-success':(l.status_verifikasi==='ditolak'?'bg-danger':'bg-warning text-dark')}">${l.status_verifikasi||'pending'}</span>
+              </div>`; 
+              ll.appendChild(div); 
+            }); 
+          }
         }
         
         // duplicate into DUDI & Magang tabs
