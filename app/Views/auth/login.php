@@ -309,7 +309,7 @@
           <label class="form-label">Email Address</label>
           <div class="input-group">
             <i class="fas fa-envelope input-icon"></i>
-            <input name="email" type="email" class="form-control" placeholder="admin@simmas.test" autocomplete="username" required>
+            <input name="email" type="email" class="form-control" placeholder="Enter your email" autocomplete="username" required>
           </div>
         </div>
         
@@ -317,7 +317,7 @@
           <label class="form-label">Password</label>
           <div class="input-group">
             <i class="fas fa-lock input-icon"></i>
-            <input id="password" name="password" type="password" class="form-control" value="password" autocomplete="current-password" required>
+            <input id="password" name="password" type="password" class="form-control" placeholder="Enter your password" autocomplete="current-password" required>
             <button id="toggle-eye" class="toggle-eye" type="button" title="Tampilkan/Sembunyikan">
               <i class="fas fa-eye"></i>
             </button>
